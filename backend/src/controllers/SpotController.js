@@ -4,11 +4,11 @@ module.exports = {
 
   async index(req, res) {
     const { tech } = req.query;
-    
+
     const spots = await Spot.find({ techs: tech });
     res.json(spots);
   },
-  
+
   async store(req, res) {
     const { filename } = req.file;
     const { company, price, techs } = req.body;
@@ -19,7 +19,7 @@ module.exports = {
       thumbnail: filename,
       company,
       price,
-      techs: techs.split(','),
+      techs: techs.split(',').map(tech => tech.trim().toUpperCase()),
     });
     res.json(spot);
   }
